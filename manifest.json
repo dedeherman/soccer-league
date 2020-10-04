@@ -1,0 +1,16 @@
+{
+  "name": "Liga Sepakbola Dunia",
+  "short_name": "Liga Sepakbola",
+  "description": "Aplikasi PWA pertama saya",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "red",
+  "theme_color": "red",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "920x920",
+      "type": "image/png"
+    }
+  ]
+}
