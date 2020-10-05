@@ -4,8 +4,10 @@ var urlsToCache = [
   "/nav.html",
   "/index.html",
   "/pages/home.html",
-  "/pages/about.html",
-  "/pages/contact.html",
+  "/pages/liga-champion.html",
+  "/pages/liga-indonesia.html",
+  "/pages/liga-inggris.html",
+  "/pages/liga-italia.html",
   "/css/materialize.min.css",
   "/js/materialize.min.js",
   "/js/nav.js"
