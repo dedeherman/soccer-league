@@ -12,7 +12,6 @@ var urlsToCache = [
   "css/style.css",
   "/js/materialize.min.js",
   "/js/nav.js",
-  "img/liga-italia.jpg"
 ];
 
 self.addEventListener("install", function (event) {
