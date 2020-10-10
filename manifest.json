@@ -1,7 +1,7 @@
 {
-  "name": "My First PWA",
-  "short_name": "My PWA",
-  "description": "Aplikasi PWA pertama saya",
+  "name": "Liga Sepakbola",
+  "short_name": "Sepakbola",
+  "description": "Informasi seputar liga sepakbola",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#00897B",
@@ -9,7 +9,7 @@
   "icons": [
     {
       "src": "icon.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]

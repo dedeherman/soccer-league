@@ -9,9 +9,18 @@ var urlsToCache = [
   "/pages/liga-inggris.html",
   "/pages/liga-italia.html",
   "/css/materialize.min.css",
-  "css/style.css",
+  "/css/materialize.css",
+  "/css/style.css",
   "/js/materialize.min.js",
   "/js/nav.js",
+  "/js/materialize.js",
+  "/manifest.json",
+  "/icon.png",
+  "/favicon.ico",
+  "/image/liga-italia.jpg",
+  "/image/liga-champion.jpg",
+  "/image/liga-indonesia.jpg",
+  "/image/liga-inggris.jpg"
 ];
 
 self.addEventListener("install", function (event) {
