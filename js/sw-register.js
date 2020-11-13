@@ -1,12 +1,12 @@
 // REGISTER SERVICE WORKER
 if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
         navigator.serviceWorker
             .register("/service-worker.js")
-            .then(function() {
+            .then(function () {
                 console.log("Pendaftaran ServiceWorker berhasil");
             })
-            .catch(function() {
+            .catch(function () {
                 console.log("Pendaftaran ServiceWorker gagal");
             });
     });
@@ -14,7 +14,3 @@ if ("serviceWorker" in navigator) {
     console.log("ServiceWorker belum didukung browser ini.");
 }
 
-// REQUEST API UNTUK PERTAMA KALI
-document.addEventListener("DOMContentLoaded", function() {
-    getArticles();
-});
