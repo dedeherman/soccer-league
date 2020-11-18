@@ -1,9 +1,8 @@
 const API_KEY = "24d0c850057c47a581dd5aecacd31571";
 const BASE_URL = "https://api.football-data.org/v2/";
-const LEAGUE_ID = 2021; //Premiere League
 
-const ENDPOINT_COMPETITION = `${BASE_URL}competitions/${LEAGUE_ID}/standings`;
-const ENDPOINT_MATCH = `${BASE_URL}competitions/${LEAGUE_ID}/matches`;
+const ENDPOINT_COMPETITION = `${BASE_URL}competitions/`;
+const ENDPOINT_TEAM = `${BASE_URL}teams/`;
 
 const fetchAPI = url => {
     return fetch(url, {
@@ -24,10 +23,10 @@ const fetchAPI = url => {
             console.log(err)
         })
 };
-
-function getAllStandings() {
+// buat fungsi untuk maendapatkan standing yang menerima parameter id Liga, sehingga dapat tampil beberapa liga
+function getAllStandings(LEAGUE_ID) {
     if ("caches" in window) {
-        caches.match(ENDPOINT_COMPETITION).then(function (response) {
+        caches.match(ENDPOINT_COMPETITION + LEAGUE_ID + '/standings').then(function (response) {
             if (response) {
                 response.json().then(function (data) {
                     console.log("Competition Data: " + data);
@@ -37,7 +36,7 @@ function getAllStandings() {
         })
     }
 
-    fetchAPI(ENDPOINT_COMPETITION)
+    fetchAPI(ENDPOINT_COMPETITION + LEAGUE_ID + '/standings')
         .then(data => {
             console.log(data);
             showStanding(data);
@@ -55,7 +54,7 @@ function showStanding(data) {
         standings += `
                 <tr>
                     <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
-                    <td>${standing.team.name}</td>
+                   <td><a href="team.html?id=${standing.team.id}">${standing.team.name}</a></td>
                     <td>${standing.won}</td>
                     <td>${standing.draw}</td>
                     <td>${standing.lost}</td>
@@ -93,28 +92,99 @@ function showStanding(data) {
     `;
 }
 
-function getAllMatches() {
-    if ("caches" in window) {
-        caches.match(ENDPOINT_COMPETITION).then(function (response) {
-            if (response) {
-                response.json().then(function (data) {
-                    console.log("Competition Data: " + data);
-                    showMatches(data);
-                })
-            }
-        })
-    }
+function getTeamById(idTeam) {
 
-    fetchAPI(ENDPOINT_MATCH)
-        .then(data => {
-            // console.log(data);
-            showMatches(data);
-        })
-        .catch(error => {
-            console.log(error)
-        })
+    return new Promise(function (resolve, reject) {
+        if ("caches" in window) {
+            caches.match(ENDPOINT_TEAM + idTeam).then(function (response) {
+                if (response) {
+                    response.json().then(function (data) {
+                        showTeamById(data);
+                        resolve(data);
+                    });
+                }
+            });
+        }
+
+        fetchAPI(ENDPOINT_TEAM + idTeam)
+            .then(data => {
+                // console.log(data);
+                showTeamById(data);
+                resolve(data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    });
+
 }
 
-function showMatches(data) {
-    console.log(data);
+function showTeamById(data) {
+    // console.log(data);
+    let teamHtml = "";
+    let squadHtml = "";
+    let squadTable = '';
+    let teamElement = document.getElementById("body-content");
+
+    teamHtml = `
+    
+        <div class="col l4 s12">
+          <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://') || 'icon.png'}" alt="${'logo ' + data.name || 'logo klub'} width="200">
+        </div>
+        <div class="col l7 s12">
+          <ul class="collection">
+            <li class="collection-item">
+              <span class="">Nama Team : </span>
+              <span>${data.name || 'nama team'}</span>
+            </li>
+            <li class="collection-item">
+              <span>Short Name : </span>
+              <span>${data.shortName || 'shortName team'} </span>
+            </li>
+            <li class="collection-item">
+              <span>Didirikan : </span>
+              <span>${data.founded || 'Tahun Berdiri'} </span>
+            </li>
+            <li class="collection-item">
+              <span>Stadion : </span>
+              <span>${data.venue || 'Nama Stadion'} </span>
+            </li>
+            <li class="collection-item">
+              <span>Alamat : </span>
+              <span>${data.address || 'Alamat'} </span>
+            </li>
+  
+          </ul>
+        </div>
+    
+    `;
+
+    data.squad.forEach(player => {
+        squadHtml += `
+      <tr>
+          <td>${player.name || 'Nama'}</td>
+          <td>${player.position || 'Posisi'}</td>
+          <td>${player.nationality || 'Kewarganegaraan'}</td>
+      </tr>
+  `;
+    })
+
+    teamElement.innerHTML = `
+    <div class="row team-container"> ${teamHtml} </div>
+  
+    <div class="row squad-container">
+      <table class="striped responsive-table">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Posisi</th>
+                <th>Kewarganegaraan</th>
+            </tr>
+          </thead>
+        <tbody id="squad">
+            ${squadHtml}
+        </tbody>
+    </table>
+    </div>
+    `;
 }

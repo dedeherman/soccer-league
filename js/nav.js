@@ -33,12 +33,10 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.open("GET", "nav.html", true);
         xhttp.send();
     }
-
     // Load page content
     var page = window.location.hash.substr(1);
-    if (page == "") page = "home";
+    if (page == "") page = "liga-inggris";
     loadPage(page);
-
     function loadPage(page) {
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
@@ -46,13 +44,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 var content = document.querySelector("#body-content");
                 content.innerHTML = xhttp.responseText;
                 if (this.status == 200) {
-                    if (page === 'home') {
-                        getAllStandings();
-                    } else if (page === 'match') {
-                        getAllMatches();
+                    if (page === 'liga-inggris') {
+                        // id liga inggris = 2021
+                        getAllStandings(2021);
+                    } if (page === 'liga-italia') {
+                        // id liga italy = 2019
+                        getAllStandings(2019);
+                    } if (page === 'liga-spanyol') {
+                        // id liga spanyol = 2014
+                        getAllStandings(2014);
+                    } if (page === 'favorite') {
+                        getAllTeams();
                     }
-
-
                 } else if (this.status == 404) {
                     content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
                 } else {
