@@ -1,5 +1,4 @@
-// buat variable untuk mengembalikan promise 
-var dbPromised = idb.open("database_epl", 1, function (upgradeDb) {
+var dbPromised = idb.open("database_epl", 1, function(upgradeDb) {
     if (!upgradeDb.objectStoreNames.contains("favorite_team")) {
         const indexFavTeam = upgradeDb.createObjectStore("favorite_team", {
             keyPath: "id"
@@ -10,18 +9,14 @@ var dbPromised = idb.open("database_epl", 1, function (upgradeDb) {
     }
 });
 
-
-// Fungsi untuk menampilkan semua team yang disimpan,
-// https://www.dicoding.com/academies/74/tutorials/2920
-
 function getAllTeams() {
     dbPromised
-        .then(function (db) {
+        .then(function(db) {
             var tx = db.transaction("favorite_team", "readonly");
             var store = tx.objectStore("favorite_team");
             return store.getAll();
         })
-        .then(function (teams) {
+        .then(function(teams) {
             // console.log(teams)
             getAllFavoriteTeams(teams);
         });
@@ -44,56 +39,43 @@ function getAllFavoriteTeams(teams) {
     document.getElementById('body-content').innerHTML = favHtml;
 }
 
-
-// fungsi saveTeam dengan parameter team yang berisi object data team dari api.
-// https://www.dicoding.com/academies/74/tutorials/2920
-// akan dijalankan pada file team.html
 function saveTeam(team) {
 
-    // panggil dbPromised yang udah dibuat diatas kemudian ke then
     dbPromised
-        .then(function (db) {
+        .then(function(db) {
             var tx = db.transaction("favorite_team", "readwrite");
             var store = tx.objectStore("favorite_team");
-            // console.log(team);
-            // pakai method put untuk save atau update data, jadi saat data sudah ada tidak error
             store.put(team);
             return tx.complete;
         })
-        .then(function () {
+        .then(function() {
             console.log("Data Berhasil disimpan");
         });
 }
 
-// fungsi untuk baca data yang menrima parameter id tim.
-// akan dijalankan pada team.html
 function getDbById(id) {
-    // kembalikan promise resolve atau reject
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         dbPromised
-            .then(function (db) {
+            .then(function(db) {
                 var tx = db.transaction("favorite_team", "readonly");
                 var store = tx.objectStore("favorite_team");
                 return store.get(id);
             })
-            .then(function (team) {
-                // kembalikan ke resolve saat sukses
+            .then(function(team) {
                 resolve(team);
             });
     });
 }
 
-// fungsi untuk hapus team berdasarkan id
-// https://www.dicoding.com/academies/74/tutorials/2910
 function deleteTeam(id) {
     dbPromised
-        .then(function (db) {
+        .then(function(db) {
             var tx = db.transaction("favorite_team", "readwrite");
             var store = tx.objectStore("favorite_team");
             store.delete(id)
             return tx.complete;
         })
-        .then(function () {
+        .then(function() {
             console.log('Team berhasil dihapus');
         });
 }

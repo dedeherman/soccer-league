@@ -117,7 +117,6 @@
         'delete'
     ]);
 
-    // proxy 'next' methods
     ['advance', 'continue', 'continuePrimaryKey'].forEach(function(methodName) {
         if (!(methodName in IDBCursor.prototype)) return;
         Cursor.prototype[methodName] = function() {
@@ -240,8 +239,6 @@
         'close'
     ]);
 
-    // Add cursor iterators
-    // TODO: remove this once browsers do the right thing with promises
     ['openCursor', 'openKeyCursor'].forEach(function(funcName) {
         [ObjectStore, Index].forEach(function(Constructor) {
             // Don't create iterateKeyCursor if openKeyCursor doesn't exist.
@@ -259,7 +256,6 @@
         });
     });
 
-    // polyfill getAll
     [Index, ObjectStore].forEach(function(Constructor) {
         if (Constructor.prototype.getAll) return;
         Constructor.prototype.getAll = function(query, count) {

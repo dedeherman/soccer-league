@@ -18,7 +18,6 @@ var urlsToCache = [
     "/js/nav.js",
     "/js/reg-sw.js",
     "/js/api.js",
-    // 3. typo 
     "/js/idb.js",
     "/js/database.js",
 
@@ -34,7 +33,6 @@ var urlsToCache = [
     "/image/liga-indonesia.jpg",
     "/image/liga-inggris.jpg",
 
-    // cache material icon
     "https://fonts.googleapis.com/icon?family=Material+Icons",
     "https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
 
@@ -48,7 +46,6 @@ self.addEventListener("install", function(event) {
     );
 });
 
-//  Menyimpan cache dinamis 
 self.addEventListener("fetch", function(event) {
 
     var base_url = "https://api.football-data.org/v2/";

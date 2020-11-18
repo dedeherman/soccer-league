@@ -1,28 +1,23 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Activate sidebar nav
+document.addEventListener("DOMContentLoaded", function() {
     var elems = document.querySelectorAll(".sidenav");
     M.Sidenav.init(elems);
     loadNav();
 
     function loadNav() {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = function() {
             if (this.readyState === 4) {
                 if (this.status !== 200) return;
 
-                // Muat daftar tautan menu
-                document.querySelectorAll(".topnav, .sidenav").forEach(function (elm) {
+                document.querySelectorAll(".topnav, .sidenav").forEach(function(elm) {
                     elm.innerHTML = xhttp.responseText;
                 });
 
-                // Daftarkan event listener untuk setiap tautan menu
-                document.querySelectorAll(".sidenav a, .topnav a").forEach(function (elm) {
-                    elm.addEventListener("click", function (event) {
-                        // Tutup sidenav
+                document.querySelectorAll(".sidenav a, .topnav a").forEach(function(elm) {
+                    elm.addEventListener("click", function(event) {
                         var sidenav = document.querySelector(".sidenav");
                         M.Sidenav.getInstance(sidenav).close();
 
-                        // Muat konten halaman yang dipanggil
                         page = event.target.getAttribute("href").substr(1);
                         loadPage(page);
                     });
@@ -33,13 +28,13 @@ document.addEventListener("DOMContentLoaded", function () {
         xhttp.open("GET", "nav.html", true);
         xhttp.send();
     }
-    // Load page content
     var page = window.location.hash.substr(1);
     if (page == "") page = "liga-inggris";
     loadPage(page);
+
     function loadPage(page) {
         var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
+        xhttp.onreadystatechange = function() {
             if (this.readyState == 4) {
                 var content = document.querySelector("#body-content");
                 content.innerHTML = xhttp.responseText;
@@ -47,13 +42,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (page === 'liga-inggris') {
                         // id liga inggris = 2021
                         getAllStandings(2021);
-                    } if (page === 'liga-italia') {
+                    }
+                    if (page === 'liga-italia') {
                         // id liga italy = 2019
                         getAllStandings(2019);
-                    } if (page === 'liga-spanyol') {
+                    }
+                    if (page === 'liga-spanyol') {
                         // id liga spanyol = 2014
                         getAllStandings(2014);
-                    } if (page === 'favorite') {
+                    }
+                    if (page === 'favorite') {
                         getAllTeams();
                     }
                 } else if (this.status == 404) {

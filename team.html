@@ -18,7 +18,6 @@
 </head>
 
 <body>
-    <!-- Navigasi -->
     <nav class="indigo darken-4" role="navigation">
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo" id="logo-container">Detail Team</a>
@@ -33,13 +32,11 @@
             </ul>
         </div>
     </nav>
-    <!-- Akhir Navigasi -->
 
     <div class="container" id="body-content">
 
     </div>
 
-    <!-- Buat Button Save atau hapus Team dari indexDb -->
     <a id="save-button" class="waves-effect waves-light btn btn-save"></a>
 
     <script src="js/materialize.min.js"></script>
@@ -49,88 +46,63 @@
     <script src="js/database.js"></script>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("DOMContentLoaded", function() {
 
-            // Ambil nilai query parameter (?id=)
             var urlParams = new URLSearchParams(window.location.search);
             var idParam = urlParams.get("id");
 
-            // convert idParam ke integer, karena tipe data pada indexdb integer
             idParam = parseInt(idParam);
 
             var buttonSave = document.getElementById('save-button');
-            // buat variabel untuk menampung nilai jika yang dibuka ada di indexdb
             var isDataDbExist = false;
 
-            //deklasrasikan variabel untuk menampung object fungsi getTeamById pada api.js 
             var dataTeam = getTeamById(idParam);
 
-            // fungsi untuk menampilkan button.
             function loadButton() {
                 getDbById(idParam)
-                    .then(function (data) {
-                        // jika data ada di indexDb maka tampilkan data dari indexdb
+                    .then(function(data) {
                         if (data) {
-                            // panggil fungsi showTeamById pada api.js dengan mengirimkan data team pada indexdb sesuai id team yang dibuka
                             showTeamById(data);
 
-                            // ganti status isDataDbExist menjadi true, karena data ada di indexDb
                             isDataDbExist = true;
 
-                            // tampilkan button delete untuk menghapus data
                             buttonSave.innerHTML = `<i class="material-icons left">delete</i>Hapus`;
 
-                            // tambahkan class red pada buttonSave agar berwarna merah
                             buttonSave.classList.add('red');
                         } else {
-                            // Kondisi jika data tidak ada di indexDb
 
-                            // jalankan fungis getTeamById pada api.js untuk request ke endpoint api
                             getTeamById(idParam);
 
-                            // set status isDataDbExist menjadi false, karena data tidak ada di indexDb
                             isDataDbExist = false;
 
-                            // tampilkan button delete untuk menghapus data.
                             buttonSave.innerHTML = `<i class="material-icons left">save</i>Simpan`;
 
-                            // hapus class red pada buttonSave agar kembali ke warna default
                             buttonSave.classList.remove('red');
                         }
                     })
             }
 
-            // event saat button save di klik
-            buttonSave.onclick = function (event) {
+            buttonSave.onclick = function(event) {
 
-                // jika data ada di database (isDataDbExist === true)
                 if (isDataDbExist === true) {
                     event.preventDefault();
 
-                    // panggil fungsi dengan mengirimkan id tim  untuk  hapus yang ada di database.js
                     deleteTeam(idParam);
 
-                    // refresh button
                     loadButton();
 
                 } else {
-                    // kondisi jika data tidak ada di indexDb
                     event.preventDefault()
 
-                    // jalankan datateam yang sudah dideklarasikan diatas
                     dataTeam.then(data => {
-                        // console.log(data);
 
-                        // jalankan saveTeam yang ada pada database.js dengan mengirimkan object data (data disini berisi object team)
                         saveTeam(data);
 
-                        // refresh loadButton
                         loadButton();
                     })
                 }
             }
 
-            // jalankan loadButton saat pertama kali halaman di load / di refresh, ini untuk menentukan yang tampil simpan atau hapus
             loadButton();
         });
     </script>

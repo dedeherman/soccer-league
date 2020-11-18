@@ -1,10 +1,9 @@
-// Periksa service worker
 if (!('serviceWorker' in navigator)) {
     console.log("Service worker tidak didukung browser ini.");
 } else {
     registerServiceWorker();
 }
-// Register service worker
+
 function registerServiceWorker() {
     return navigator.serviceWorker.register('service-worker.js')
         .then(function(registration) {
@@ -16,14 +15,12 @@ function registerServiceWorker() {
         });
 }
 
-// Periksa fitur Notification API
 if ("Notification" in window) {
     requestPermission();
 } else {
     console.error("Browser tidak mendukung notifikasi.");
 }
 
-// Meminta ijin menggunakan Notification API
 function requestPermission() {
     if ('Notification' in window) {
         Notification.requestPermission().then(result => {
@@ -36,11 +33,10 @@ function requestPermission() {
             }
 
             if (('PushManager' in window)) {
-                // Jika service worker sudah ready (navigator.serviceWorker.ready)
                 navigator.serviceWorker.ready.then(reg => {
                     reg.pushManager.subscribe({
                         userVisibleOnly: true,
-                        applicationServerKey: urlBase64ToUint8Array("BAhp35Ni4oAL2nqH6qei07lIutCE9WX5u-3fTeLNhYbh9e4hrER6QgGPD8a6a7Pz_61t6hYifaXGptkMQVpRCtg")
+                        applicationServerKey: urlBase64ToUint8Array("BPJUN7IX4DOMkCf9Notasz8SmwNYj79jy5qwa5i9uPlwBWySKd29aYC5Leaf2WpXmgQxX0tla-_pkk9j0n1feRU")
                     }).then(sub => {
                         console.log('Berhasil melakukan subscribe dengan endpoint: ', sub.endpoint);
                         console.log('Berhasil melakukan subscribe dengan p256dh key: ', btoa(String.fromCharCode.apply(
@@ -49,7 +45,6 @@ function requestPermission() {
                             null, new Uint8Array(sub.getKey('auth')))));
                     }).catch(e => {
                         console.error('Tidak dapat melakukan subscribe ', e);
-                        // kembalikan agar menjalankan register service worker
                         return registerServiceWorker();
                     });
 

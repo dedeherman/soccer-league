@@ -6,10 +6,10 @@ const ENDPOINT_TEAM = `${BASE_URL}teams/`;
 
 const fetchAPI = url => {
     return fetch(url, {
-        headers: {
-            'X-Auth-Token': API_KEY
-        }
-    })
+            headers: {
+                'X-Auth-Token': API_KEY
+            }
+        })
         .then(res => {
             if (res.status !== 200) {
                 console.log("Error: " + res.status);
@@ -23,12 +23,12 @@ const fetchAPI = url => {
             console.log(err)
         })
 };
-// buat fungsi untuk maendapatkan standing yang menerima parameter id Liga, sehingga dapat tampil beberapa liga
+
 function getAllStandings(LEAGUE_ID) {
     if ("caches" in window) {
-        caches.match(ENDPOINT_COMPETITION + LEAGUE_ID + '/standings').then(function (response) {
+        caches.match(ENDPOINT_COMPETITION + LEAGUE_ID + '/standings').then(function(response) {
             if (response) {
-                response.json().then(function (data) {
+                response.json().then(function(data) {
                     console.log("Competition Data: " + data);
                     showStanding(data);
                 })
@@ -50,7 +50,7 @@ function showStanding(data) {
     let standings = "";
     let standingElement = document.getElementById("body-content");
 
-    data.standings[0].table.forEach(function (standing) {
+    data.standings[0].table.forEach(function(standing) {
         standings += `
                 <tr>
                     <td><img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/></td>
@@ -94,11 +94,11 @@ function showStanding(data) {
 
 function getTeamById(idTeam) {
 
-    return new Promise(function (resolve, reject) {
+    return new Promise(function(resolve, reject) {
         if ("caches" in window) {
-            caches.match(ENDPOINT_TEAM + idTeam).then(function (response) {
+            caches.match(ENDPOINT_TEAM + idTeam).then(function(response) {
                 if (response) {
-                    response.json().then(function (data) {
+                    response.json().then(function(data) {
                         showTeamById(data);
                         resolve(data);
                     });
