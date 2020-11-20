@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 const CACHE_NAME = "firstpwa-v1";
 var urlsToCache = [
     "/",
@@ -12,10 +13,24 @@ var urlsToCache = [
     "/pages/liga-indonesia.html",
     "/pages/liga-inggris.html",
     "/pages/liga-italia.html",
+=======
+const CACHE_NAME = "firstpwa";
+var urlsToCache = [
+    "/",
+    "/nav.html",
+    "/index.html",
+    "/pages/home.html",
+    "/pages/liga-champion.html",
+    "/pages/liga-indonesia.html",
+    "/pages/liga-inggris.html",
+    "/pages/liga-italia.html",
+    "/pages/match.html",
+>>>>>>> 313667fc13b545cd31a40d4d5dcb9aa106bd311f
     "/css/materialize.min.css",
     "/css/style.css",
     "/js/materialize.min.js",
     "/js/nav.js",
+<<<<<<< HEAD
     "/js/reg-sw.js",
     "/js/api.js",
     "/js/idb.js",
@@ -36,6 +51,17 @@ var urlsToCache = [
     "https://fonts.googleapis.com/icon?family=Material+Icons",
     "https://fonts.gstatic.com/s/materialicons/v67/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2"
 
+=======
+    "/js/sw-register.js",
+    "/js/api.js",
+    "/manifest.json",
+    "/icon.png",
+    "/favicon.ico",
+    "/image/liga-italia.jpg",
+    "/image/liga-champion.jpg",
+    "/image/liga-indonesia.jpg",
+    "/image/liga-inggris.jpg"
+>>>>>>> 313667fc13b545cd31a40d4d5dcb9aa106bd311f
 ];
 
 self.addEventListener("install", function(event) {
@@ -47,6 +73,7 @@ self.addEventListener("install", function(event) {
 });
 
 self.addEventListener("fetch", function(event) {
+<<<<<<< HEAD
 
     var base_url = "https://api.football-data.org/v2/";
     if (event.request.url.indexOf(base_url) > -1) {
@@ -65,6 +92,24 @@ self.addEventListener("fetch", function(event) {
             })
         )
     }
+=======
+    event.respondWith(
+        caches
+        .match(event.request, { cacheName: CACHE_NAME })
+        .then(function(response) {
+            if (response) {
+                console.log("ServiceWorker: Gunakan aset dari cache: ", response.url);
+                return response;
+            }
+
+            console.log(
+                "ServiceWorker: Memuat aset dari server: ",
+                event.request.url
+            );
+            return fetch(event.request);
+        })
+    );
+>>>>>>> 313667fc13b545cd31a40d4d5dcb9aa106bd311f
 });
 
 self.addEventListener("activate", function(event) {
@@ -80,6 +125,7 @@ self.addEventListener("activate", function(event) {
             );
         })
     );
+<<<<<<< HEAD
 });
 
 self.addEventListener('push', function(event) {
@@ -102,4 +148,6 @@ self.addEventListener('push', function(event) {
     event.waitUntil(
         self.registration.showNotification('Push Notification', options)
     );
+=======
+>>>>>>> 313667fc13b545cd31a40d4d5dcb9aa106bd311f
 });

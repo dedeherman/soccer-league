@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "theme_color": "#00897B",
     "background_color": "#00897B",
     "display": "standalone",
@@ -36,4 +37,20 @@
     "name_2": "Push Notification FCM",
     "gcm_sender_id": "419316573694"
 
+=======
+  "name": "Liga Sepakbola",
+  "short_name": "Sepakbola",
+  "description": "Informasi seputar liga sepakbola",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#00897B",
+  "theme_color": "#00897B",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+>>>>>>> 313667fc13b545cd31a40d4d5dcb9aa106bd311f
 }
